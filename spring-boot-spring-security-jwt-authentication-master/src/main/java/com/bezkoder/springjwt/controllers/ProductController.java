@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "product/create")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Respon<Product> createProduct(@RequestBody String product)
     {
         Gson gson = new Gson();
@@ -39,6 +41,7 @@ public class ProductController {
         return productServices.creatProduct(productNew);
     }
     @PutMapping(value = "product/update")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Respon<Product> updateProduct(@RequestBody String product)
     {
         Gson gson = new Gson();
@@ -46,6 +49,7 @@ public class ProductController {
         return productServices.updatePrduct(productNew);
     }
     @DeleteMapping(value = "product/delete")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public  Respon<Product> deleteProDuct(@RequestParam int idProduct)
     {
         return productServices.delete(idProduct);

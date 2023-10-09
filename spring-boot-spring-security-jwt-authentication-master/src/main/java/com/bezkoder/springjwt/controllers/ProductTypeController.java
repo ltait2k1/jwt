@@ -18,13 +18,14 @@ public class ProductTypeController {
     @Autowired
     private IProductTypeServices productTypeServices;
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+
     @GetMapping(value = "productType/getAll/{pageNumber}/{pageSize}")
     public Page<ProductType> getAll(@PathVariable int pageNumber, @PathVariable int pageSize){
         return productTypeServices.getAll(pageNumber,pageSize);
     }
 
     @PostMapping(value = "productType/addProductType")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Respon<ProductType> addProductType(@RequestBody String productTypeNew){
         Gson gson = new Gson();
         ProductType productType =gson.fromJson(productTypeNew, ProductType.class);
@@ -32,6 +33,7 @@ public class ProductTypeController {
     }
 
     @PutMapping(value = "productType/updateProductType")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Respon<ProductType> updateProductType(@RequestBody String productTypeNew){
         Gson gson = new Gson();
         ProductType productType =gson.fromJson(productTypeNew, ProductType.class);
@@ -39,10 +41,12 @@ public class ProductTypeController {
     }
 
     @DeleteMapping(value = "productType/deleteProductType")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Respon<ProductType> deleteProductType(@RequestParam int productTypeId){
         return productTypeServices.deleteProductType(productTypeId);
     }
     @GetMapping(value = "producttype/seach/{pageNumber}/{pageSize}")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public Page<ProductType> seachProduct(@RequestParam String name, @PathVariable int pageNumber,@PathVariable int pageSize)
     {
         return productTypeServices.seachProduct(name,pageNumber,pageSize);
